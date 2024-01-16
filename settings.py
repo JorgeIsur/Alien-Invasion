@@ -8,3 +8,8 @@ class Settings():
         self.bg_color = (230,230,230)
         # Configuraciones de la nave
         self.ship_speed_factor = 1.5
+        # Configuracinoes de las balas
+        self.bullet_speed_factor = 1
+        self.bullet_width = 3
+        self.bullet_height = 15
+        self.bullet_color = 60, 60, 60
