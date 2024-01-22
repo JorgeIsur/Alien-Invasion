@@ -9,7 +9,7 @@ def check_events(ai_settings, screen, ship, bullets):
     """Responde a entradas de teclado y eventos del mouse"""
     # esperar eventos de teclado y mouse
     for event in pygame.event.get():
-        #print(event.type)
+        # print(event.type)
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
@@ -27,10 +27,7 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
         # mover la nave a la izquierda
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
-        #print("Espacio")
-        # Crear una nueva bala y añadirla al grupo de balas
-        new_bullet = Bullet(ai_settings, screen, ship)
-        bullets.add(new_bullet)
+        fire_bullet(ai_settings, screen, ship, bullets)
 
 
 def check_keyup_events(event, ship):
@@ -52,3 +49,23 @@ def update_screen(ai_settings, screen, ship, bullets):
 
     # mostrar la pantalla
     pygame.display.flip()
+
+
+def update_bullets(bullets):
+    """Actualizar la posición de las balas y eliminar balas innecesarias"""
+    # Actualizar posición de balas
+    bullets.update()
+    # Eliminar las balas que han desaparecido de la pantalla
+    for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)
+    # verificar que las balas se eliminaron
+    # print(len(bullets))
+
+
+def fire_bullet(ai_settings, screen, ship, bullets):
+    """Disparar una bala si el limite de balas no se ha sobrepasado"""
+    if len(bullets) < ai_settings.bullets_allowed:
+        # Crear una nueva bala y añadirla al grupo de balas
+        new_bullet = Bullet(ai_settings, screen, ship)
+        bullets.add(new_bullet)

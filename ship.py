@@ -8,7 +8,7 @@ class Ship():
         self.ai_settings = ai_settings
 
         # Carga la imagen de la nave
-        self.image = pygame.image.load('images/ship.bmp')
+        self.image = pygame.image.load('images/kanye.bmp')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 

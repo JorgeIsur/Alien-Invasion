@@ -32,7 +32,7 @@ def run_game():
         # Actualizar posición de la nave
         ship.update()
         # Actualizar posición de balas
-        bullets.update()
+        gf.update_bullets(bullets)
         # actualizador de pantalla
         gf.update_screen(ai_settings,screen,ship, bullets)
 
