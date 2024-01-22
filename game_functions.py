@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from bullet import Bullet
+from alien import Alien
 
 
 def check_events(ai_settings, screen, ship, bullets):
@@ -28,6 +29,8 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
         fire_bullet(ai_settings, screen, ship, bullets)
+    elif event.key == pygame.K_q:
+        sys.exit()
 
 
 def check_keyup_events(event, ship):
@@ -38,7 +41,7 @@ def check_keyup_events(event, ship):
         ship.moving_left = False
 
 
-def update_screen(ai_settings, screen, ship, bullets):
+def update_screen(ai_settings, screen, ship, aliens, bullets):
     """Actualiza imagenes en la pantalla"""
     # redibujar la pantalla en cada iteracion del ciclo
     screen.fill(ai_settings.bg_color)
@@ -46,6 +49,7 @@ def update_screen(ai_settings, screen, ship, bullets):
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.blitme()
+    aliens.draw(screen)
 
     # mostrar la pantalla
     pygame.display.flip()
@@ -69,3 +73,20 @@ def fire_bullet(ai_settings, screen, ship, bullets):
         # Crear una nueva bala y añadirla al grupo de balas
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
+
+def create_fleet(ai_settings, screen, aliens):
+    """Crear una flota llena de aliens"""
+    # Crear un alien y determinar el numero de aliens por fila
+    # Espacio entre aliens es igual al ancho de un alien
+    alien = Alien(ai_settings,screen)
+    alien_width = alien.rect.width
+    available_space_x = ai_settings.screen_width - 2*alien_width
+    number_aliens_x = int(available_space_x/(2*alien_width))
+
+    # Crear la primera fila de aliens
+    for alien_number in range(number_aliens_x):
+        # Crear un alien y ponerlo en la fila
+        alien = Alien(ai_settings,screen)
+        alien.x = alien_width + 2 * alien_width * alien_number
+        alien.rect.x = alien.x
+        aliens.add(alien)

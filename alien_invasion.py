@@ -18,12 +18,16 @@ def run_game():
     pygame.init()
     ai_settings = Settings()
     screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
-    pygame.display.set_caption("Alien Invasion")
+    pygame.display.set_caption("Taylor's Invasion")
 
     # instanciar la nave
     ship = Ship(ai_settings,screen)
     # crear un grupo para almacenar balas en el
     bullets = Group()
+    # crear un grupo de aliens
+    aliens = Group()
+    # crear una flota de aliens
+    gf.create_fleet(ai_settings,screen,aliens)
 
     # inicializar el ciclo principal para el juego
     while True:
@@ -34,7 +38,7 @@ def run_game():
         # Actualizar posición de balas
         gf.update_bullets(bullets)
         # actualizador de pantalla
-        gf.update_screen(ai_settings,screen,ship, bullets)
+        gf.update_screen(ai_settings,screen,ship, aliens, bullets)
 
 
 run_game()
